@@ -31,24 +31,24 @@ async def lifespan(app: FastAPI):
         - Close database connections
     """
     # Startup
-    print(f"🚀 Starting {settings.PROJECT_NAME} v{settings.VERSION}")
-    print(f"📊 Database: {settings.DATABASE_URL.split('@')[-1]}")  # Hide credentials
-    print(f"🔒 Debug Mode: {settings.DEBUG}")
+    print(f"Starting {settings.PROJECT_NAME} v{settings.VERSION}")
+    print(f"Database: {settings.DATABASE_URL.split('@')[-1]}")  # Hide credentials
+    print(f"Debug Mode: {settings.DEBUG}")
     
     # Verify database connection by trying to connect
     try:
         with engine.connect() as conn:
-            print("✅ Database connection successful")
+            print("Database connection successful")
     except Exception as e:
-        print(f"❌ Database connection failed: {e}")
+        print(f"Database connection failed: {e}")
         raise
     
     yield
     
     # Shutdown
-    print(f"🛑 Shutting down {settings.PROJECT_NAME}")
+    print(f"Shutting down {settings.PROJECT_NAME}")
     engine.dispose()
-    print("✅ Database connections closed")
+    print("Database connections closed")
 
 
 # Create FastAPI application instance
