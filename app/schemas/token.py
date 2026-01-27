@@ -5,14 +5,14 @@ Token Schemas.
 from typing import Optional
 from pydantic import BaseModel
 
-class TokenResponse(BaseModel):
+class Token(BaseModel):
     """
     Schema for returning tokens to the client.
+    Matches the expectation in auth_service.py
     """
     access_token: str
     refresh_token: str
     token_type: str = "bearer"
-    expires_in: int  # Seconds
 
 class TokenPayload(BaseModel):
     """
