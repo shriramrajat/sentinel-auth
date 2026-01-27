@@ -48,3 +48,7 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(db_user)
         return db_user
+
+    def get_all(self, skip: int = 0, limit: int = 100) -> list[User]:
+        """Get all users with pagination."""
+        return self.db.query(User).offset(skip).limit(limit).all()

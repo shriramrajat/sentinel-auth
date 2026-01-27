@@ -46,3 +46,10 @@ class UserService:
             password_hash=hashed_password,
             role_id=user_role.id
         )
+
+    def get_all_users(self, skip: int = 0, limit: int = 100):
+        """
+        Get all users.
+        Future: We will add a check here to ensure only Admins can call this.
+        """
+        return self.user_repo.get_all(skip=skip, limit=limit)
