@@ -104,8 +104,7 @@ async def health_check():
         "version": settings.VERSION
     }
 
+# Include API routers
+from app.api.router import api_router
+app.include_router(api_router, prefix="/api/v1")
 
-# Future: Include API routers here
-# Example:
-# from app.api.router import api_router
-# app.include_router(api_router, prefix=settings.API_V1_PREFIX)
