@@ -3,8 +3,8 @@ from app.api.routes import auth, users, admin
 
 api_router = APIRouter()
 
-# Group: Authentication (Login)
-api_router.include_router(auth.router, tags=["Authentication"])
+# Group: Authentication (Login) w/ prefix /auth
+api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 
 # Group: Users (Signup, Profile)
 api_router.include_router(users.router, prefix="/users", tags=["Users"])
