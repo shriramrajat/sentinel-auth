@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.db.session import engine
 from app.db.base import Base
-
+from app.middlewares.rate_limit import RateLimitMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -61,6 +61,8 @@ app = FastAPI(
     redoc_url="/redoc",    # ReDoc at /redoc
     openapi_url="/openapi.json"
 )
+# Add Rate Limiter (100 requests per minute)
+app.add_middleware(RateLimitMiddleware, rate_limit=100, time_window=60)
 
 # Configure CORS middleware
 app.add_middleware(
