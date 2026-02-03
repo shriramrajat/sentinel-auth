@@ -1,0 +1,22 @@
+# Git
+.git
+.gitignore
+
+# Python/Environment
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.coverage
+htmlcov
+
+# Configuration
+.env
+.env.local
+.env.example
+
+# Docker
+docker-compose.yml
+Dockerfile
