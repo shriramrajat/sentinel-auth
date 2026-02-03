@@ -1,6 +1,6 @@
 <div align="center">
 
-![SentinelAuth Banner](https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop)  
+![SentinelAuth Banner](media\sentinelauth.png)  
 *Note: Replace with your custom banner later*
 
 # SENTINEL AUTH
