@@ -14,6 +14,9 @@ from app.db.session import engine
 from app.db.base import Base
 from app.middlewares.rate_limit import RateLimitMiddleware
 from app.middlewares.request_logger import RequestLoggerMiddleware
+from sqladmin import Admin
+from app.admin import UserAdmin, RoleAdmin, RequestLogAdmin, TokenAdmin
+
 
 
 @asynccontextmanager
@@ -109,6 +112,13 @@ async def health_check():
         "service": settings.PROJECT_NAME,
         "version": settings.VERSION
     }
+
+# Setup Admin Dashboard
+admin = Admin(app, engine)
+admin.add_view(UserAdmin)
+admin.add_view(RoleAdmin)
+admin.add_view(RequestLogAdmin)
+admin.add_view(TokenAdmin)
 
 # Include API routers
 from app.api.router import api_router

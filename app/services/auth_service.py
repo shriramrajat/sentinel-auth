@@ -5,7 +5,7 @@ from app.repositories.user_repo import UserRepository
 from app.core.security import verify_password
 from app.core.tokens import create_access_token, create_refresh_token
 from app.schemas.token import Token
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from jose import JWTError
 from app.repositories.token_repo import TokenRepository
 from app.core.security import decode_token, get_password_hash # (Keep existing imports too)
@@ -43,7 +43,7 @@ class AuthService:
         # So we should hash the refresh token string before saving.
         refresh_hash = get_password_hash(refresh_str) 
         
-        expires_at = datetime.utcnow() + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
+        expires_at = datetime.now(timezone.utc) + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
         self.token_repo.create(user_id=user.id, token_hash=refresh_hash, expires_at=expires_at)
 
         return Token(
@@ -103,7 +103,7 @@ class AuthService:
         new_access_token = create_access_token(user_id=str(user.id), role=user.role.name)
         new_refresh_str = create_refresh_token(user_id=str(user.id))
         
-        expires_at = datetime.utcnow() + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
+        expires_at = datetime.now(timezone.utc) + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
         self.token_repo.create(user_id=user.id, token_hash=new_refresh_str, expires_at=expires_at)
         
         return Token(

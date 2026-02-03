@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import List, TYPE_CHECKING
 from sqlalchemy import String, Boolean, ForeignKey, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
+from datetime import datetime, timezone
 from app.db.base import Base
 
 if TYPE_CHECKING:
@@ -95,16 +95,13 @@ class User(Base):
     
     # Timestamps
     created_at: Mapped[datetime] = mapped_column(
-        default=datetime.utcnow,
-        nullable=False,
-        comment="When this user was created"
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False
     )
-    
     updated_at: Mapped[datetime] = mapped_column(
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
-        nullable=False,
-        comment="When this user was last updated"
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+        nullable=False
     )
     
     # Relationships

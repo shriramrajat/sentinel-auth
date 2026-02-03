@@ -4,7 +4,7 @@ Security utilities.
 This module handles password hashing, verification, and JWT operations.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, Union, Dict, Optional
 from jose import jwt, JWTError
 from passlib.context import CryptContext
@@ -57,16 +57,16 @@ def create_token(data: Dict[str, Any], expires_delta: Optional[timedelta] = None
     to_encode = data.copy()
     
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
         # Default fallback (should usually be provided by caller)
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
         
     to_encode.update({"exp": expire})
     
     # Add issued at time if not present
     if "iat" not in to_encode:
-        to_encode["iat"] = datetime.utcnow()
+        to_encode["iat"] = datetime.now(timezone.utc)
         
     try:
         encoded_jwt = jwt.encode(
