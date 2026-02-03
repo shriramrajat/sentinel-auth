@@ -13,6 +13,8 @@ from app.core.config import settings
 from app.db.session import engine
 from app.db.base import Base
 from app.middlewares.rate_limit import RateLimitMiddleware
+from app.middlewares.request_logger import RequestLoggerMiddleware
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -63,6 +65,8 @@ app = FastAPI(
 )
 # Add Rate Limiter (100 requests per minute)
 app.add_middleware(RateLimitMiddleware, rate_limit=100, time_window=60)
+app.add_middleware(RequestLoggerMiddleware)
+
 
 # Configure CORS middleware
 app.add_middleware(

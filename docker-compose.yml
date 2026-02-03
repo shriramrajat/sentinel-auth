@@ -3,25 +3,29 @@ version: '3.8'
 services:
   web:
     build: .
+    container_name: sentinel_api
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - .:/app
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/sentinelauth
-      - SECRET_KEY=changethislesssecurekey
+      # Override DB Host to point to the docker service name 'db' instead of localhost
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-NewStrongPassword123}@db:5432/sentinel_auth
     depends_on:
       - db
 
   db:
     image: postgres:15
+    container_name: sentinel_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=sentinelauth
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-NewStrongPassword123}
+      - POSTGRES_DB=sentinel_auth
     ports:
       - "5432:5432"
 
