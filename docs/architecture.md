@@ -3,6 +3,11 @@
 ## Layered Design
 SentinelAuth follows a strict **Layered Architecture** to ensure separation of concerns:
 
+0.  **Middleware Layer** (`app/middlewares`): 
+    *   **Role**: Pre- & Post-processing for every request.
+    *   **Responsibility**: Rate Limiting, Audit Logging, CORS handling.
+    *   **Components**: `RateLimitMiddleware`, `RequestLoggerMiddleware`.
+
 1.  **API Layer** (`app/api`): 
     *   **Role**: Entry point for HTTP requests.
     *   **Responsibility**: Validation (Pydantic), Auth Guards (Dependencies), Response Formatting.
@@ -23,4 +28,4 @@ SentinelAuth follows a strict **Layered Architecture** to ensure separation of c
     *   **Responsibility**: Mapping Python objects to PostgreSQL tables.
 
 ## Data Flow
-Request -> API (Validate) -> Service (Decide) -> Repository (Query) -> Database
+Request -> Middleware -> API (Validate) -> Service (Decide) -> Repository (Query) -> Database
