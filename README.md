@@ -1,7 +1,6 @@
 <div align="center">
 
-![SentinelAuth Banner](media\sentinelauth.png)  
-*Note: Replace with your custom banner later*
+![SentinelAuth Banner](./media/sentinelauth.png)
 
 # SENTINEL AUTH
 
